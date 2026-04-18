@@ -13,6 +13,7 @@
 		"noImplicitThis": false,
 		"strictNullChecks": false,
 		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
 		"sourceMap": true,
 		"paths": {
 			"pebble/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/pebble/*"],

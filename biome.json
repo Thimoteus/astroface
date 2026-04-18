@@ -8,9 +8,10 @@
   "files": {
     "includes": [
       "src/embeddedjs/**/*.ts",
-      "src/embeddedjs/**/*.js",
-      "src/pkjs/**/*.js",
+      "src/pkjs/**/*.ts",
+      "src/common/**/*.js",
       "!src/embeddedjs/**/*.js",
+      "!src/pkjs/**/*.js",
       "!**/*.js.map",
       "!build/**",
       "!node_modules/**"

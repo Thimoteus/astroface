@@ -14,6 +14,11 @@ yarn-error.log*
 # pebble build auto-compiles src/embeddedjs/*.ts via its own tsc invocation
 src/embeddedjs/*.js
 src/embeddedjs/*.js.map
+# pkjs TS is compiled to pkjs-dist/ (consumed by waf via wscript)
+pkjs-dist/
+# guard against stale/accidental in-place pkjs compiles
+src/pkjs/*.js
+src/pkjs/*.js.map
 
 # OS
 .DS_Store

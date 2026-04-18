@@ -7,7 +7,9 @@
   ],
   "private": true,
   "scripts": {
-    "build": "pebble build",
+    "build:pkjs": "tsc -p src/pkjs/tsconfig.json",
+    "typecheck": "tsc && tsc -p src/pkjs/tsconfig.json --noEmit",
+    "build": "tsc --noEmit && npm run build:pkjs && pebble build",
     "lint": "biome lint src/embeddedjs src/pkjs",
     "format": "biome format --write src/embeddedjs src/pkjs",
     "check": "biome check src/embeddedjs src/pkjs",

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "lib": ["es2020", "dom"],
+    "types": [],
+    "rootDir": ".",
+    "outDir": "../../pkjs-dist",
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "noEmitOnError": true
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
+}
