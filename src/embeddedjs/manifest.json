@@ -1,0 +1,14 @@
+{
+ 	"include":  [
+		"$(MODDABLE)/examples/manifest_typings.json",
+		"$(MODDABLE)/examples/manifest_mod.json"
+	],
+	"modules": {
+		"*": "./main",
+		"@thimoteus/alst_core/ALST.gen": "../../node_modules/@thimoteus/alst_core/src/ALST.gen",
+		"@thimoteus/alst_core/ALST.res": "../../node_modules/@thimoteus/alst_core/src/ALST.res",
+		"@thimoteus/alst_core/Angles.gen": "../../node_modules/@thimoteus/alst_core/src/Angles.gen",
+		"@thimoteus/alst_core/Angles.res": "../../node_modules/@thimoteus/alst_core/src/Angles.res",
+		"@thimoteus/alst_core/Julian.res": "../../node_modules/@thimoteus/alst_core/src/Julian.res"
+	}
+}

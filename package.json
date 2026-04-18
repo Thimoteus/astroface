@@ -1,0 +1,43 @@
+{
+  "name": "astroface",
+  "author": "MakeAwesomeHappen",
+  "version": "1.0.0",
+  "keywords": [
+    "pebble-app"
+  ],
+  "private": true,
+  "scripts": {
+    "build": "pebble build",
+    "lint": "biome lint src/embeddedjs src/pkjs",
+    "format": "biome format --write src/embeddedjs src/pkjs",
+    "check": "biome check src/embeddedjs src/pkjs",
+    "fix": "biome check --write src/embeddedjs src/pkjs"
+  },
+  "dependencies": {
+    "@thimoteus/alst_core": "1.0.1"
+  },
+  "pebble": {
+    "displayName": "astroface",
+    "uuid": "68f57bd9-d788-4f4d-9cbf-da6bf4940c2c",
+    "projectType": "moddable",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+      "emery",
+      "gabbro"
+    ],
+    "watchapp": {
+      "watchface": true
+    },
+    "messageKeys": [
+      "dummy"
+    ],
+    "resources": {
+      "media": []
+    }
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.12",
+    "typescript": "^5.9.3"
+  }
+}

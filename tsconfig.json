@@ -1,0 +1,42 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"module": "es2022",
+		"target": "es2024",
+		"lib": ["es2024", "esnext.iterator"],
+		"moduleResolution": "node",
+		"allowJs": true,
+		"checkJs": true,
+		"noEmit": true,
+		"strict": true,
+		"noImplicitAny": false,
+		"noImplicitThis": false,
+		"strictNullChecks": false,
+		"forceConsistentCasingInFileNames": true,
+		"sourceMap": true,
+		"paths": {
+			"pebble/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/pebble/*"],
+			"commodetto/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/commodetto/*"],
+			"piu/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/piu/*"],
+			"pins/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/pins/*"],
+			"mc/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/mc/*"],
+			"text/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/text/*"],
+			"dns/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/dns/*"],
+			"embedded:io/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/embedded_io/*"],
+			"embedded:network/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/embedded_network/*"],
+			"embedded:provider/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/embedded_provider/*"],
+			"@thimoteus/alst_core/*": ["./node_modules/@thimoteus/alst_core/types/*"],
+			"*": [
+				"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/*",
+				"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/ble/*",
+				"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/web/*"
+			]
+		},
+		"types": [
+			"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/xs/includes/xs",
+			"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/global",
+			"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/pebble/global"
+		]
+	},
+	"include": ["src/embeddedjs/**/*.ts"]
+}
