@@ -13,7 +13,8 @@
     "lint": "biome lint src/embeddedjs src/pkjs",
     "format": "biome format --write src/embeddedjs src/pkjs",
     "check": "biome check src/embeddedjs src/pkjs",
-    "fix": "biome check --write src/embeddedjs src/pkjs"
+    "fix": "biome check --write src/embeddedjs src/pkjs",
+    "clean": "pebble clean"
   },
   "dependencies": {
     "@thimoteus/alst_core": "1.0.1"
@@ -31,8 +32,9 @@
     "watchapp": {
       "watchface": true
     },
+    "capabilities": ["location"],
     "messageKeys": [
-      "dummy"
+      "LONGITUDE"
     ],
     "resources": {
       "media": []
