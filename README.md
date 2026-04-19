@@ -1,7 +1,11 @@
 # astroface
 
+![astroface watch face](./astroface.png)
+
 A watchface that displays the local time (upper left), date (upper right), and apparent local sidereal time (bottom left), with a starfield calculated from the phone and sent to the watch.
 Stars are colored according to their B-V index, and sizes are partitioned into three buckets with the brightest stars appearing as a +.
+Updates to the star field occur every 5 minutes, while longitude updates occur every hour.
+Stars brighter than magnitude 4 are displayed.
 
 ## CSV Data
 
