@@ -91,7 +91,9 @@ export const projectToScreen = (
 };
 
 // Must match the hardcoded byte check in src/embeddedjs/main.ts (StarFieldBehavior.setStars).
-const PROTOCOL_VERSION = 4;
+// v5 packs size-code + color-bin into one byte per star to keep the ArrayBuffer
+// under the watch's XS chunk budget when the magnitude filter is loose.
+const PROTOCOL_VERSION = 5;
 
 // B-V color bins: length-5 thresholds → 6 bins.
 // bin 0: B-V < -0.05        hot blue (O/B)
@@ -111,6 +113,17 @@ const bvBin = (bv: number): number => {
   return BV_THRESHOLDS.length;
 };
 
+// Drawing-mode codes must match StarFieldBehavior.onDraw in the watch mod.
+const SIZE_CROSS = 0;
+const SIZE_2PX = 1;
+const SIZE_1PX = 2;
+
+const sizeCode = (magTenths: number): number => {
+  if (magTenths <= 15) return SIZE_CROSS;
+  if (magTenths <= 25) return SIZE_2PX;
+  return SIZE_1PX;
+};
+
 export const computeVisibleStarsPayload = (
   dateMs: number,
   latRad: number,
@@ -126,7 +139,8 @@ export const computeVisibleStarsPayload = (
     const [altRad, azRad] = computeAltAz(lstRad, latRad, s.raRad, s.decRad);
     const p = projectToScreen(altRad, azRad, screen);
     if (!p) continue;
-    out.push(p.x, p.y, s.magTenths, bvBin(s.bv));
+    // Pack size-code (2 bits) and color-bin (3 bits) into a single byte.
+    out.push(p.x, p.y, (sizeCode(s.magTenths) << 5) | (bvBin(s.bv) & 0x07));
     count++;
   }
   out[1] = count & 0xff;

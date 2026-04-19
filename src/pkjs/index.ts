@@ -10,7 +10,7 @@ const FIVE_MIN_MS = 5 * 60 * 1000;
 const ONE_HOUR_MS = 60 * 60 * 1000;
 const FIX_RETRY_MS = 5 * 1000;
 const DEG_TO_RAD = Math.PI / 180;
-const MAG_LIMIT_TENTHS = 30;
+const MAG_LIMIT_TENTHS = 40;
 
 interface FixState {
   latRad: number;
