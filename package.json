@@ -7,8 +7,10 @@
   ],
   "private": true,
   "scripts": {
-    "build:pkjs": "tsc -p src/pkjs/tsconfig.json",
-    "typecheck": "tsc && tsc -p src/pkjs/tsconfig.json --noEmit",
+    "typecheck:pkjs": "tsc -p src/pkjs/tsconfig.json --noEmit",
+    "bundle:pkjs": "esbuild src/pkjs/index.ts --bundle --platform=browser --format=cjs --target=es2015 --loader:.csv=text --outfile=pkjs-dist/index.js --log-level=warning",
+    "build:pkjs": "npm run typecheck:pkjs && npm run bundle:pkjs",
+    "typecheck": "tsc && npm run typecheck:pkjs",
     "build": "tsc --noEmit && npm run build:pkjs && pebble build",
     "lint": "biome lint src/embeddedjs src/pkjs",
     "format": "biome format --write src/embeddedjs src/pkjs",
@@ -32,9 +34,12 @@
     "watchapp": {
       "watchface": true
     },
-    "capabilities": ["location"],
+    "capabilities": [
+      "location"
+    ],
     "messageKeys": [
-      "LONGITUDE"
+      "LONGITUDE",
+      "STARS"
     ],
     "resources": {
       "media": []
@@ -42,6 +47,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.12",
+    "esbuild": "^0.28.0",
     "typescript": "^5.9.3"
   }
 }
