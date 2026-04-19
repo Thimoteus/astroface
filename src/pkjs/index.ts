@@ -8,8 +8,9 @@ import { type Star, STARS } from "./stars";
 
 const FIVE_MIN_MS = 5 * 60 * 1000;
 const ONE_HOUR_MS = 60 * 60 * 1000;
+const FIX_RETRY_MS = 5 * 1000;
 const DEG_TO_RAD = Math.PI / 180;
-const MAG_LIMIT_TENTHS = 40;
+const MAG_LIMIT_TENTHS = 30;
 
 interface FixState {
   latRad: number;
@@ -26,7 +27,10 @@ const pickScreen = (): Screen => {
   try {
     const info = Pebble.getActiveWatchInfo();
     const profile = SCREENS[info.platform];
-    if (profile) return profile;
+    if (profile) {
+      console.log(`PKJS platform="${info.platform}" screen=${profile.w}x${profile.h} cx=${profile.cx}`);
+      return profile;
+    }
     console.log(`PKJS unknown platform "${info.platform}", defaulting to emery`);
   } catch (e) {
     console.log(`PKJS getActiveWatchInfo failed: ${(e as Error).message}`);
@@ -63,6 +67,9 @@ const acquireLocation = (): void => {
         `PKJS fix lat=${pos.coords.latitude.toFixed(3)} lon=${lonDeg.toFixed(3)} visible=${visible.length}/${STARS.length}`
       );
       tick();
+      // First tick can race the watch's Message constructor (kPKJSReadyMessage
+      // handshake). A single retry covers that without spamming.
+      setTimeout(tick, FIX_RETRY_MS);
     },
     (err) => console.log(`PKJS location error (${err.code}): ${err.message}`),
     { enableHighAccuracy: true, maximumAge: 10000, timeout: 15000 }

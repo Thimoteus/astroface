@@ -16,7 +16,9 @@
     "format": "biome format --write src/embeddedjs src/pkjs",
     "check": "biome check src/embeddedjs src/pkjs",
     "fix": "biome check --write src/embeddedjs src/pkjs",
-    "clean": "pebble clean"
+    "clean:emu": "pebble kill; pkill -f '[q]emu-pebble' 2>/dev/null; pkill -f '[p]ypkjs' 2>/dev/null; rm -f /tmp/pb-emulator.json ~/.pebble-sdk/*/emery/qemu_spi_flash.bin; sleep 2",
+    "clean": "npm run clean:emu && pebble clean",
+    "install:emery": "npm run build || exit $?; trap 'exit 130' INT; npm run clean:emu; for i in 1 2 3; do timeout 60 pebble install --emulator emery -v && exec pebble logs --emulator emery -v; npm run clean:emu; done; exit 1"
   },
   "dependencies": {
     "@thimoteus/alst_core": "1.0.1"
