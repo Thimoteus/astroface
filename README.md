@@ -21,6 +21,16 @@ Hand-picked star names: Polaris, Rigel, Betelgeuse, Vega, Antares, Sirius, Capel
 2. `npm run build`
 3. `npm run install:emery`
 
+## Screenshots
+
+With `npm run install:emery` running in one terminal, open a second terminal and run:
+
+- `pebble screenshot --emulator emery shot.png` — single PNG at native dimensions (200×228).
+- `pebble screenshot --all-platforms` — captures both `emery` and `gabbro` in one go (useful for appstore listings).
+- `pebble screenshot --gif-all-platforms` — rollover GIFs per platform.
+
+If you get `Connection refused`, the emulator isn't actually running — `/tmp/pb-emulator.json` is stale from a prior session. Run `npm run clean:emu` and boot fresh with `npm run install:emery`.
+
 ## Out-of-tree patch: `libpebble2` QEMU transport (no longer necessary?)
 
 The installed `pebble-tool`'s `libpebble2/communication/transports/qemu/__init__.py` has been hand-patched so `QemuTransport.connect()` retries `[Errno 111] Connection refused` for up to 5 seconds (20 × 0.25s) instead of failing on the first try. Without this, `pypkjs` races QEMU's bind of its first `-serial tcp::PORT,server,nowait` and dies before the install reaches the watch — `pebble-tool`'s `_wait_for_qemu` only watches the *second* serial for the firmware boot banner, so by the time it spawns `pypkjs` the first port may not yet be accepting connections.

@@ -11,8 +11,7 @@ export interface Screen {
 }
 
 export const SCREENS: Readonly<Record<string, Screen>> = {
-  emery: { w: 200, h: 228, cx: 100, cy: 114, r: 100 },
-  gabbro: { w: 200, h: 200, cx: 100, cy: 100, r: 100 }
+  emery: { w: 200, h: 228, cx: 100, cy: 114, r: 100 }
 };
 
 const TWO_PI = 2 * Math.PI;

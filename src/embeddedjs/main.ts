@@ -40,10 +40,6 @@ const formatTime = (date: Date): string =>
 const formatDate = (date: Date): string =>
   `${pad2(date.getFullYear() % 100)}/${pad2(date.getMonth() + 1)}/${pad2(date.getDate())}`;
 
-// Round displays (gabbro) clip the corners, so stack the labels along the
-// vertical axis near the N/S cardinals instead of placing them in corners.
-const isRound = screen.width === screen.height;
-
 const backgroundSkin = new Skin({ fill: "black" });
 const compassStyle = new Style({
   font: "bold 14px Gothic",
@@ -58,21 +54,21 @@ const starLabelStyle = new Style({
   vertical: "middle"
 });
 const timeStyle = new Style({
-  font: isRound ? "bold 18px Gothic" : "bold 14px Gothic",
+  font: "bold 14px Gothic",
   color: "#FF5555",
-  horizontal: isRound ? "center" : "left",
+  horizontal: "left",
   vertical: "middle"
 });
 const dateStyle = new Style({
   font: "bold 14px Gothic",
   color: "#FF5555",
-  horizontal: isRound ? "center" : "right",
+  horizontal: "right",
   vertical: "middle"
 });
 const alstStyle = new Style({
-  font: isRound ? "bold 18px Gothic" : "bold 14px Gothic",
+  font: "bold 14px Gothic",
   color: "#FF5555",
-  horizontal: isRound ? "center" : "left",
+  horizontal: "left",
   vertical: "middle"
 });
 
@@ -212,17 +208,9 @@ const FaceApplication = Application.template(($) => ({
       bottom: 0,
       Behavior: StarFieldBehavior
     }),
-    ...(isRound
-      ? [
-          Label($, { top: 18, left: 0, right: 0, height: 22, style: timeStyle }),
-          Label($, { top: 40, left: 0, right: 0, height: 16, style: dateStyle }),
-          Label($, { bottom: 18, left: 0, right: 0, height: 22, style: alstStyle })
-        ]
-      : [
-          Label($, { top: 2, left: 4, width: 80, height: 14, style: timeStyle }),
-          Label($, { top: 2, right: 4, width: 80, height: 14, style: dateStyle }),
-          Label($, { bottom: 2, left: 4, width: 80, height: 14, style: alstStyle })
-        ]),
+    Label($, { top: 2, left: 20, width: 80, height: 14, style: timeStyle }),
+    Label($, { top: 2, right: 20, width: 80, height: 14, style: dateStyle }),
+    Label($, { bottom: 2, left: 20, width: 80, height: 14, style: alstStyle }),
     Label($, { top: 2, left: 0, right: 0, height: 14, style: compassStyle, string: "N" }),
     Label($, { bottom: 2, left: 0, right: 0, height: 14, style: compassStyle, string: "S" }),
     Label($, { left: 2, top: 0, bottom: 0, width: 14, style: compassStyle, string: "E" }),

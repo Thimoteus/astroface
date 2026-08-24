@@ -1,7 +1,7 @@
 {
   "name": "astroface",
   "author": "MakeAwesomeHappen",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "keywords": [
     "pebble-app"
   ],
@@ -30,8 +30,7 @@
     "sdkVersion": "3",
     "enableMultiJS": true,
     "targetPlatforms": [
-      "emery",
-      "gabbro"
+      "emery"
     ],
     "watchapp": {
       "watchface": true
