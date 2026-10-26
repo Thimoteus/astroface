@@ -17,15 +17,16 @@ const HOURS_TO_RAD = 15 * DEG_TO_RAD;
 // (e.g. "33 Psc", "21Alp And"). Only this allowlist of proper names gets a
 // rendered label on the watchface.
 const LABELED_NAMES = new Set([
-  "Polaris",
-  "Rigel",
-  "Betelgeuse",
-  "Vega",
   "Antares",
-  "Sirius",
+  "Arcturus",
+  "Betelgeuse",
   "Capella",
   "Fomalhaut",
-  "Spica"
+  "Polaris",
+  "Rigel",
+  "Sirius",
+  "Spica",
+  "Vega",
 ]);
 
 const named: Star[] = [];
