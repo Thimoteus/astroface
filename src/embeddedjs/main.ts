@@ -78,6 +78,8 @@ dbg("mod main " + heapText());
 // biome-ignore lint/suspicious/noExplicitAny: Deg_make's return type isn't visible to the build-time tsconfig
 let longitude: any = null;
 const storedLon = localStorage.getItem("longitude");
+// Tracks what's actually persisted so we skip redundant flash writes.
+let savedLon: string | null = storedLon;
 dbg("stored lon " + (storedLon === null ? "none" : storedLon));
 if (storedLon !== null) {
   const parsedStored = Number(storedLon);
@@ -151,7 +153,10 @@ class StarFieldBehavior extends Behavior {
   labels: StarLabel[] | null = null;
 
   setStars(port: Port, buffer: ArrayBuffer): void {
-    const bytes = new Uint8Array(buffer);
+    // Copy out of the message's receive buffer so the big message buffer can be
+    // released as soon as the message is done instead of living until the next
+    // STARS delivery (~5 min later).
+    const bytes = new Uint8Array(buffer.slice(0));
     // Must match PROTOCOL_VERSION in src/pkjs/astronomy.ts.
     if (bytes.length < 3 || bytes[0] !== 5) return;
     this.stars = bytes;
@@ -247,7 +252,11 @@ class FaceApplicationBehavior {
               const parsed = Number(lon);
               if (Number.isFinite(parsed)) {
                 longitude = Deg_make(parsed);
-                localStorage.setItem("longitude", parsed.toString());
+                const asText = parsed.toString();
+                if (asText !== savedLon) {
+                  localStorage.setItem("longitude", asText);
+                  savedLon = asText;
+                }
                 render(new Date());
               }
             }
