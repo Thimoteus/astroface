@@ -1,10 +1,9 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
 		"module": "es2022",
 		"target": "es2024",
 		"lib": ["es2024", "esnext.iterator"],
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"allowJs": true,
 		"checkJs": true,
 		"noEmit": true,
@@ -16,27 +15,27 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"paths": {
-			"pebble/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/pebble/*"],
-			"commodetto/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/commodetto/*"],
-			"piu/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/piu/*"],
-			"pins/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/pins/*"],
-			"mc/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/mc/*"],
-			"text/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/text/*"],
-			"dns/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/dns/*"],
-			"embedded:io/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/embedded_io/*"],
-			"embedded:network/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/embedded_network/*"],
-			"embedded:provider/*": ["/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/embedded_provider/*"],
+			"pebble/*": ["/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/pebble/*"],
+			"commodetto/*": ["/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/commodetto/*"],
+			"piu/*": ["/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/piu/*"],
+			"pins/*": ["/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/pins/*"],
+			"mc/*": ["/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/mc/*"],
+			"text/*": ["/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/text/*"],
+			"dns/*": ["/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/dns/*"],
+			"embedded:io/*": ["/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/embedded_io/*"],
+			"embedded:network/*": ["/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/embedded_network/*"],
+			"embedded:provider/*": ["/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/embedded_provider/*"],
 			"@thimoteus/alst_core/*": ["./node_modules/@thimoteus/alst_core/types/*"],
 			"*": [
-				"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/*",
-				"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/ble/*",
-				"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/web/*"
+				"/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/*",
+				"/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/ble/*",
+				"/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/web/*"
 			]
 		},
 		"types": [
-			"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/xs/includes/xs",
-			"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/global",
-			"/home/thimotron-vm/.pebble-sdk/SDKs/4.9.148/toolchain/moddable/typings/pebble/global"
+			"/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/xs/includes/xs",
+			"/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/global",
+			"/home/thimotron/.local/share/pebble-sdk/SDKs/4.33.1/toolchain/moddable/typings/pebble/global"
 		]
 	},
 	"include": ["src/embeddedjs/**/*.ts"]
