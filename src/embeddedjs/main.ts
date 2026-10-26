@@ -108,13 +108,13 @@ const compassStyle = new Style({
   vertical: "middle"
 });
 const starLabelStyle = new Style({
-  font: "9px Gothic",
+  font: "14px Gothic",
   color: "#FFFFFF",
   horizontal: "left",
   vertical: "middle"
 });
 const timeStyle = new Style({
-  font: "bold 14px Gothic",
+  font: "bold 18px Gothic",
   color: "#FF5555",
   horizontal: "left",
   vertical: "middle"
