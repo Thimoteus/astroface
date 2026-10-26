@@ -4,18 +4,21 @@ int main(void) {
   Window *w = window_create();
   window_stack_push(w, true);
 
-  /* NULL here means a fixed 32 kB engine pool shared by the slot heap, chunk
-   * heap, and stack -- far too small for this face (alst_core tables + the
-   * star buffer + per-message strings). App RAM is ~122 kB total and native
-   * code uses roughly 28 kB, so give the engine ~66 kB. All three sizes must
-   * be set, and when their total exceeds 32 kB the engine uses exactly these
-   * sizes and never grows. If the face OOMs at *launch*, back slot/chunk down
-   * ~25% at a time. */
+  /* Engine pool sizes. NULL would mean a fixed 32 kB pool shared by the slot
+   * heap, chunk heap, and stack. These are the exact sizes from the official
+   * Alloy docs example (~55 kB total), known to fit alongside the native
+   * side within the ~122 kB app RAM budget. When the total exceeds 32 kB the
+   * engine uses exactly these sizes and never grows.
+   *
+   * kModdableCreationFlagLogInstrumentation makes the engine stream real
+   * slot/chunk/stack stats into the app log while a log listener is attached
+   * -- remove it once the memory situation is settled. */
   moddable_createMachine(&(ModdableCreationRecord){
       .recordSize = sizeof(ModdableCreationRecord),
-      .stack = 6144,
-      .slot = 36864,
-      .chunk = 24576,
+      .flags = kModdableCreationFlagLogInstrumentation,
+      .stack = 5120,
+      .slot = 31744,
+      .chunk = 19456,
   });
 
   window_destroy(w);
