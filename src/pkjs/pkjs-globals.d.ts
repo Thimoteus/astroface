@@ -32,7 +32,9 @@ declare global {
     sendAppMessage(
       dict: AppMessageDict,
       onSuccess?: (e: { data: { transactionId: number } }) => void,
-      onError?: (e: { data: { transactionId: number }; error: { message: string } }) => void
+      // The bridge's failure payload is not documented and is NOT shaped like
+      // { error: { message } }; treat it as unknown and print it with describe().
+      onError?: (e: unknown) => void
     ): number;
 
     getAccountToken(): string;

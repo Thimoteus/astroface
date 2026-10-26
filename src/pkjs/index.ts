@@ -4,6 +4,7 @@ import {
   computeVisibleStarsPayload,
   filterVisibleAtLatitude
 } from "./astronomy";
+import { describe } from "./inspect";
 import { type Star, STARS } from "./stars";
 
 const FIVE_MIN_MS = 5 * 60 * 1000;
@@ -33,7 +34,7 @@ const pickScreen = (): Screen => {
     }
     console.log(`PKJS unknown platform "${info.platform}", defaulting to emery`);
   } catch (e) {
-    console.log(`PKJS getActiveWatchInfo failed: ${(e as Error).message}`);
+    console.log(`PKJS getActiveWatchInfo failed: ${describe(e)}`);
   }
   return SCREENS.emery;
 };
@@ -52,7 +53,10 @@ const tick = (): void => {
   Pebble.sendAppMessage(
     { LONGITUDE: fix.lonDeg.toFixed(3), STARS: payload },
     () => console.log("PKJS STARS sent ok"),
-    (e) => console.log(`PKJS STARS send failed: ${e.error.message}`)
+    // The failure payload's shape is not documented anywhere we trust, and the
+    // previous `e.error.message` guess silently printed "undefined". Dump the
+    // whole payload so the real fields (and their names) are visible.
+    (e) => console.log(`PKJS STARS send failed (${payload.length} bytes): ${describe(e)}`)
   );
 };
 
@@ -71,7 +75,7 @@ const acquireLocation = (): void => {
       // handshake). A single retry covers that without spamming.
       setTimeout(tick, FIX_RETRY_MS);
     },
-    (err) => console.log(`PKJS location error (${err.code}): ${err.message}`),
+    (err) => console.log(`PKJS location error: ${describe(err)}`),
     { enableHighAccuracy: true, maximumAge: 10000, timeout: 15000 }
   );
 };

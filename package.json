@@ -23,7 +23,7 @@
     "clean": "npm run clean:emu && pebble clean",
     "install:emery": "npm run build:pebble || exit $?; trap 'exit 130' INT; npm run clean:emu; for i in 1 2 3; do timeout 60 pebble install --emulator emery -v && exec pebble logs --emulator emery -v; npm run clean:emu; done; exit 1",
     "install:phone": "npm run build:pebble || exit $?; test -n \"$PHONE_IP\" || { echo 'usage: PHONE_IP=192.168.1.42 npm run install:phone  (LAN dev connection IP shown in the Pebble app)'; exit 1; }; exec pebble install --phone \"$PHONE_IP\"",
-    "logs:phone": "exec pebble logs --phone \"$PHONE_IP\""
+    "logs:phone": "exec pebble logs --phone \"$PHONE_IP\" -v"
   },
   "dependencies": {
     "@thimoteus/alst_core": "1.0.1"
