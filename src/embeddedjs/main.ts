@@ -236,7 +236,9 @@ class FaceApplicationBehavior {
       () =>
         new Message({
           keys: ["LONGITUDE", "STARS"],
-          input: 2048,
+          // Largest STARS payload is ~818 B; 1024 leaves headroom without
+          // pinning 2 KB of the scarce XS heap.
+          input: 1024,
           onReadable(): void {
             const msg = this.read();
             const lon = msg.get("LONGITUDE");
@@ -294,7 +296,9 @@ const face = phase(
   "app",
   () =>
     new FaceApplication(null, {
-      displayListLength: 2048,
+      // Display-list items are heap-allocated (~20+ bytes each); 2048 reserves a
+      // slab the Pebble heap can't afford. This app has ~8 components.
+      displayListLength: 96,
       touchCount: 0,
       pixels: screen.width * 4
     })
