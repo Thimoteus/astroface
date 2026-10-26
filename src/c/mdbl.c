@@ -12,10 +12,12 @@ int main(void) {
    *
    * kModdableCreationFlagLogInstrumentation makes the engine stream real
    * slot/chunk/stack stats into the app log while a log listener is attached
-   * -- remove it once the memory situation is settled. */
+   * -- debug builds only. */
   moddable_createMachine(&(ModdableCreationRecord){
       .recordSize = sizeof(ModdableCreationRecord),
+#ifdef PBL_DEBUG
       .flags = kModdableCreationFlagLogInstrumentation,
+#endif
       .stack = 5120,
       .slot = 31744,
       .chunk = 19456,
