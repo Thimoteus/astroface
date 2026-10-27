@@ -15,10 +15,10 @@
     "typecheck": "npm run gen:tsconfig && tsc && npm run typecheck:pkjs",
     "build": "npm run gen:tsconfig && tsc --noEmit && npm run build:pkjs",
     "build:pebble": "pebble clean && npm run build && pebble build",
-    "lint": "biome lint src/embeddedjs src/pkjs",
-    "format": "biome format --write src/embeddedjs src/pkjs",
-    "check": "biome check src/embeddedjs src/pkjs",
-    "fix": "biome check --write src/embeddedjs src/pkjs",
+    "lint": "oxlint --deny-warnings src/embeddedjs src/pkjs",
+    "format": "oxfmt --write src/embeddedjs src/pkjs",
+    "check": "oxfmt --check src/embeddedjs src/pkjs && npm run lint",
+    "fix": "npm run format && oxlint --fix src/embeddedjs src/pkjs",
     "clean:emu": "pebble kill; pkill -f '[q]emu-pebble' 2>/dev/null; pkill -f '[p]ypkjs' 2>/dev/null; rm -f /tmp/pb-emulator.json ~/.pebble-sdk/*/emery/qemu_spi_flash.bin \"${XDG_DATA_HOME:-$HOME/.local/share}/pebble-sdk/\"*/emery/qemu_spi_flash.bin; sleep 2",
     "clean": "npm run clean:emu && pebble clean",
     "install:emery": "npm run build:pebble || exit $?; trap 'exit 130' INT; npm run clean:emu; for i in 1 2 3; do timeout 60 pebble install --emulator emery -v && exec pebble logs --emulator emery -v; npm run clean:emu; done; exit 1",
@@ -52,8 +52,9 @@
     }
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.12",
     "esbuild": "^0.28.0",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.89.0",
     "typescript": "^7.0.2"
   }
 }

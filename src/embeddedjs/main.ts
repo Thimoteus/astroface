@@ -5,10 +5,8 @@ import Message from "pebble/message";
 // tsconfig still resolves these imports for the editor; the suppression
 // directives below cover the build-time tsconfig where they would otherwise
 // fail to resolve.
-// biome-ignore lint/suspicious/noTsIgnore: build-time tsconfig lacks the path alias
 // @ts-ignore
 import { alst } from "@thimoteus/alst_core/ALST.gen";
-// biome-ignore lint/suspicious/noTsIgnore: build-time tsconfig lacks the path alias
 // @ts-ignore
 import { Deg_make } from "@thimoteus/alst_core/Angles.gen";
 
@@ -75,7 +73,7 @@ dbg("mod main " + heapText());
 // Null sentinel distinguishes "never received a fix" from "user is literally at 0° longitude",
 // which matters because a true 0° user should still see ALST. Persisted to localStorage so
 // that last-known longitude survives relaunches until the phone delivers a fresh fix.
-// biome-ignore lint/suspicious/noExplicitAny: Deg_make's return type isn't visible to the build-time tsconfig
+// NOTE: Deg_make's return type isn't visible to the build-time tsconfig
 let longitude: any = null;
 const storedLon = localStorage.getItem("longitude");
 // Tracks what's actually persisted so we skip redundant flash writes.
@@ -88,14 +86,13 @@ if (storedLon !== null) {
 
 const pad2 = (n: number): string => (n < 10 ? "0" : "") + n;
 
-// biome-ignore lint/suspicious/noExplicitAny: see `longitude` declaration above
+// NOTE: see `longitude` declaration above
 const formatALST = (date: Date, lon: any): string => {
   const [h, m] = alst(date, lon);
   return `${pad2(h)}:${pad2(m)}`;
 };
 
-const formatTime = (date: Date): string =>
-  `${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
+const formatTime = (date: Date): string => `${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
 
 const formatDate = (date: Date): string =>
   `${pad2(date.getFullYear() % 100)}/${pad2(date.getMonth() + 1)}/${pad2(date.getDate())}`;
@@ -132,14 +129,7 @@ const alstStyle = new Style({
   vertical: "middle"
 });
 
-const STAR_COLORS = [
-  "#AAAAFF",
-  "#AAFFFF",
-  "#FFFFFF",
-  "#FFFFAA",
-  "#FFAA55",
-  "#FF5555"
-];
+const STAR_COLORS = ["#AAAAFF", "#AAFFFF", "#FFFFFF", "#FFFFAA", "#FFAA55", "#FF5555"];
 dbg("ok skins+styles " + heapText());
 
 interface StarLabel {

@@ -26,7 +26,7 @@ const LABELED_NAMES = new Set([
   "Rigel",
   "Sirius",
   "Spica",
-  "Vega",
+  "Vega"
 ]);
 
 const named: Star[] = [];

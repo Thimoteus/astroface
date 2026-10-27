@@ -24,7 +24,9 @@ const pickScreen = (): Screen => {
     const info = Pebble.getActiveWatchInfo();
     const profile = SCREENS[info.platform];
     if (profile) {
-      console.log(`PKJS platform="${info.platform}" screen=${profile.w}x${profile.h} cx=${profile.cx}`);
+      console.log(
+        `PKJS platform="${info.platform}" screen=${profile.w}x${profile.h} cx=${profile.cx}`
+      );
       return profile;
     }
     console.log(`PKJS unknown platform "${info.platform}", defaulting to emery`);
