@@ -19,11 +19,6 @@ interface FixState {
   visible: ReadonlyArray<Star>;
 }
 
-let fix: FixState | null = null;
-let screen: Screen = SCREENS.emery;
-let starInterval: ReturnType<typeof setInterval> | null = null;
-let locationInterval: ReturnType<typeof setInterval> | null = null;
-
 const pickScreen = (): Screen => {
   try {
     const info = Pebble.getActiveWatchInfo();
@@ -39,53 +34,54 @@ const pickScreen = (): Screen => {
   return SCREENS.emery;
 };
 
-const tick = (): void => {
-  if (!fix) return;
-  const payload = computeVisibleStarsPayload(
-    Date.now(),
-    fix.latRad,
-    fix.lonDeg,
-    screen,
-    fix.visible
-  );
-  const starCount = payload[1] | (payload[2] << 8);
-  console.log(`PKJS sending STARS payload (${starCount} stars, ${payload.length} bytes)`);
-  Pebble.sendAppMessage(
-    { LONGITUDE: fix.lonDeg.toFixed(3), STARS: payload },
-    () => console.log("PKJS STARS sent ok"),
-    // The failure payload's shape is not documented anywhere we trust, and the
-    // previous `e.error.message` guess silently printed "undefined". Dump the
-    // whole payload so the real fields (and their names) are visible.
-    (e) => console.log(`PKJS STARS send failed (${payload.length} bytes): ${describe(e)}`)
-  );
-};
+const boot = (): void => {
+  const screen = pickScreen();
+  let fix: FixState | null = null;
 
-const acquireLocation = (): void => {
-  navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      const latRad = pos.coords.latitude * DEG_TO_RAD;
-      const lonDeg = pos.coords.longitude;
-      const visible = filterVisibleAtLatitude(STARS, latRad, MAG_LIMIT_TENTHS);
-      fix = { latRad, lonDeg, visible };
-      console.log(
-        `PKJS fix lat=${pos.coords.latitude.toFixed(3)} lon=${lonDeg.toFixed(3)} visible=${visible.length}/${STARS.length}`
-      );
-      tick();
-      // First tick can race the watch's Message constructor (kPKJSReadyMessage
-      // handshake). A single retry covers that without spamming.
-      setTimeout(tick, FIX_RETRY_MS);
-    },
-    (err) => console.log(`PKJS location error: ${describe(err)}`),
-    { enableHighAccuracy: true, maximumAge: 10000, timeout: 15000 }
-  );
+  const tick = (): void => {
+    if (!fix) return;
+    const payload = computeVisibleStarsPayload(
+      Date.now(),
+      fix.latRad,
+      fix.lonDeg,
+      screen,
+      fix.visible
+    );
+    const starCount = payload[1] | (payload[2] << 8);
+    console.log(`PKJS sending STARS payload (${starCount} stars, ${payload.length} bytes)`);
+    Pebble.sendAppMessage(
+      { LONGITUDE: fix.lonDeg.toFixed(3), STARS: payload },
+      () => console.log("PKJS STARS sent ok"),
+      (e) => console.log(`PKJS STARS send failed (${payload.length} bytes): ${describe(e)}`)
+    );
+  };
+
+  const acquireLocation = (): void => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const latRad = pos.coords.latitude * DEG_TO_RAD;
+        const lonDeg = pos.coords.longitude;
+        const visible = filterVisibleAtLatitude(STARS, latRad, MAG_LIMIT_TENTHS);
+        fix = { latRad, lonDeg, visible };
+        console.log(
+          `PKJS fix lat=${pos.coords.latitude.toFixed(3)} lon=${lonDeg.toFixed(3)} visible=${visible.length}/${STARS.length}`
+        );
+        tick();
+        // First tick can race the watch's Message constructor (kPKJSReadyMessage
+        // handshake). A single retry covers that without spamming.
+        setTimeout(tick, FIX_RETRY_MS);
+      },
+      (err) => console.log(`PKJS location error: ${describe(err)}`),
+      { enableHighAccuracy: true, maximumAge: 10000, timeout: 15000 }
+    );
+  };
+
+  acquireLocation();
+  setInterval(tick, FIVE_MIN_MS);
+  setInterval(acquireLocation, ONE_HOUR_MS);
 };
 
 Pebble.addEventListener("ready", (_e) => {
   console.log("PKJS ready");
-  screen = pickScreen();
-  acquireLocation();
-  if (starInterval !== null) clearInterval(starInterval);
-  if (locationInterval !== null) clearInterval(locationInterval);
-  starInterval = setInterval(tick, FIVE_MIN_MS);
-  locationInterval = setInterval(acquireLocation, ONE_HOUR_MS);
+  boot();
 });

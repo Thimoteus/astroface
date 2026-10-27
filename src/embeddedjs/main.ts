@@ -114,19 +114,19 @@ const starLabelStyle = new Style({
   vertical: "middle"
 });
 const timeStyle = new Style({
-  font: "bold 18px Gothic",
+  font: "bold 24px Gothic",
   color: "#FF5555",
   horizontal: "left",
   vertical: "middle"
 });
 const dateStyle = new Style({
-  font: "bold 14px Gothic",
+  font: "bold 18px Gothic",
   color: "#FF5555",
   horizontal: "right",
   vertical: "middle"
 });
 const alstStyle = new Style({
-  font: "bold 14px Gothic",
+  font: "bold 18px Gothic",
   color: "#FF5555",
   horizontal: "left",
   vertical: "middle"
